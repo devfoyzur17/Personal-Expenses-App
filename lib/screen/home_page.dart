@@ -18,9 +18,9 @@ class _HomePageState extends State<HomePage> {
   final _amountController = TextEditingController();
 
   final List<Transaction> _transaction = [
-    Transaction(id: "1", title: "Books", amount: 599, date: DateTime.now()),
-    Transaction(id: "1", title: "Laptop", amount: 50000, date: DateTime.now()),
-    Transaction(id: "1", title: "Phone", amount: 14999, date: DateTime.now()),
+    // Transaction(id: "1", title: "Books", amount: 599, date: DateTime.now()),
+    // Transaction(id: "1", title: "Laptop", amount: 50000, date: DateTime.now()),
+    // Transaction(id: "1", title: "Phone", amount: 14999, date: DateTime.now()),
   ];
 
   void _addNewTransaction(String name, double amount) {
@@ -52,8 +52,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 2,
-        title: Text("Expenses"),
+        elevation: 2, 
+        title: Text("Personal Expenses List!"),
         actions: [
           IconButton(
               onPressed: () {
@@ -62,16 +62,13 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.add))
         ],
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Text("Personal Expenses !!"),
-              //   NewTransaction(_addNewTransaction),
-              TransactionList(_transaction)
-            ],
-          ),
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text("Personal Expenses !!", textAlign: TextAlign.center,),
+          //   NewTransaction(_addNewTransaction),
+          TransactionList(_transaction)
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 2,
