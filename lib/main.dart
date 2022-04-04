@@ -19,6 +19,11 @@ void main() {
    Widget build(BuildContext context) {
      return MaterialApp(
        debugShowCheckedModeBanner: false,
+       title: "Personal Expenses!",
+       theme: ThemeData(
+         primarySwatch: Colors.purple,
+        
+       ),
        home: HomePage(),
      );
    }

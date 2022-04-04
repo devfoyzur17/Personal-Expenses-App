@@ -20,57 +20,54 @@ class _TransactionListState extends State<TransactionList> {
       child: Column(
         children: [
           Flexible(
-             
             child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: widget.transaction.length,
-              itemBuilder:(context, index) {
-          
-                return Card(
-                   child: Row(
-                       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                       children: [
-                         Container(
-                           width: 110,
-                           margin: EdgeInsets.all(10),
-                           padding:
-                               EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                           decoration: BoxDecoration(
-                               border:
-                                   Border.all(color: Colors.purple, width: 1.5)),
-                           child: Text(
-                             "৳ ${widget.transaction[index].amount}",
-                             style: TextStyle(
-                                 color: Colors.purple,
-                                 fontWeight: FontWeight.bold,
-                                 fontSize: 17),
-                             textAlign: TextAlign.start,
-                           ),
-                         ),
-                         Column(
-                           crossAxisAlignment: CrossAxisAlignment.start,
-                           children: [
-                             Text(
-                               widget.transaction[index].title,
-                               style: TextStyle(
-                                   color: Colors.black,
-                                   fontWeight: FontWeight.bold,
-                                   fontSize: 16),
-                             ),
-                             Text(
-                               DateFormat.jms().format(widget.transaction[index].date),
-                               style: TextStyle(color: Colors.black54),
-                             ),
-                             Text(
-                               DateFormat.yMMMEd().format(widget.transaction[index].date),
-                               style: TextStyle(color: Colors.black54),
-                             )
-                           ],
-                         )
-                       ]),
-                 );
-              
-            }),
+                shrinkWrap: true,
+                itemCount: widget.transaction.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: Row(children: [
+                      Container(
+                        width: 110,
+                        margin: EdgeInsets.all(10),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        decoration: BoxDecoration(
+                            border:
+                                Border.all(color: Theme.of(context).primaryColor, width: 1.5)),
+                        child: Text(
+                          "৳ ${widget.transaction[index].amount.toStringAsFixed(1)}",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.transaction[index].title,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          Text(
+                            DateFormat.jms()
+                                .format(widget.transaction[index].date),
+                            style: TextStyle(color: Colors.black54),
+                          ),
+                          Text(
+                            DateFormat.yMMMEd()
+                                .format(widget.transaction[index].date),
+                            style: TextStyle(color: Colors.black54),
+                          )
+                        ],
+                      )
+                    ]),
+                  );
+                }),
           ),
         ],
       ),

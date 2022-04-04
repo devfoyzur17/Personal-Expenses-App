@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_field
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_field, unused_element
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -30,27 +30,57 @@ class _HomePageState extends State<HomePage> {
         amount: amount,
         date: DateTime.now());
 
-        setState(() {
-          _transaction.add(newTransaction);
-        });
+    setState(() {
+      _transaction.add(newTransaction);
+    });
   }
 
-  
+  void _startAddNewTransaction(BuildContext ctx) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return GestureDetector(
+            onTap: (){},
+            child: NewTransaction(_addNewTransaction),
+           // behavior: HitTestBehavior.opaque,
+            );
+            
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 2,
+        title: Text("Expenses"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                _startAddNewTransaction(context);
+              },
+              icon: Icon(Icons.add))
+        ],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
               Text("Personal Expenses !!"),
-              NewTransaction(_addNewTransaction),
+              //   NewTransaction(_addNewTransaction),
               TransactionList(_transaction)
             ],
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        elevation: 2,
+        onPressed: () {
+          _startAddNewTransaction(context);
+        },
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

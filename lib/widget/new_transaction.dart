@@ -1,11 +1,10 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unused_local_variable
 
 import 'package:flutter/material.dart';
 
 class NewTransaction extends StatefulWidget {
-
-final Function addNewTransaction;
-   NewTransaction(this.addNewTransaction);
+  final Function addNewTransaction;
+  NewTransaction(this.addNewTransaction);
 
   @override
   State<NewTransaction> createState() => _NewTransactionState();
@@ -14,6 +13,21 @@ final Function addNewTransaction;
 class _NewTransactionState extends State<NewTransaction> {
   final _nameController = TextEditingController();
   final _amountController = TextEditingController();
+
+  void submittedData() {
+    final enterNameController = _nameController.text;
+    final enterAmountController = double.parse(_amountController.text);
+
+    if (enterNameController.isEmpty || enterAmountController <= 0) {
+      return;
+    } else {
+      widget.addNewTransaction(
+          _nameController.text, double.parse(_amountController.text));
+    }
+
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -21,8 +35,12 @@ class _NewTransactionState extends State<NewTransaction> {
       child: Container(
         margin: EdgeInsets.all(10),
         child: Column(children: [
+// this is amount textfield
+
           TextField(
             controller: _nameController,
+            keyboardType: TextInputType.name,
+          onSubmitted: (_) => submittedData(),
             decoration: InputDecoration(
                 labelText: "Name",
                 hintText: "enter your cost name.",
@@ -42,8 +60,13 @@ class _NewTransactionState extends State<NewTransaction> {
           SizedBox(
             height: 20,
           ),
+
+// This is amount text field
+
           TextField(
             controller: _amountController,
+            keyboardType: TextInputType.number,
+           onSubmitted: (_) => submittedData(),
             decoration: InputDecoration(
                 labelText: "Amount",
                 hintText: "enter the cost name.",
@@ -63,6 +86,9 @@ class _NewTransactionState extends State<NewTransaction> {
           SizedBox(
             height: 10,
           ),
+
+// this is add transaction button
+
           OutlinedButton(
               style: OutlinedButton.styleFrom(
                   primary: Colors.purple,
@@ -71,7 +97,7 @@ class _NewTransactionState extends State<NewTransaction> {
                     width: 2,
                   )),
               onPressed: () {
-                widget.addNewTransaction(_nameController.text, double.parse(_amountController.text));
+                submittedData();
               },
               child: Text(
                 "Add Transaction",
