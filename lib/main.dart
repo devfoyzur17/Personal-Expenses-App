@@ -23,6 +23,8 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
           primarySwatch: Colors.purple,
           fontFamily: 'Quicksand',
+          //shadowColor: Color(0xffff80ff),
+          cardTheme: CardTheme(shadowColor: Color(0xffff80ff)),
           
      
           textTheme: TextTheme(

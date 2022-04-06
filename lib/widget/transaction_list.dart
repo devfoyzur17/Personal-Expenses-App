@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -23,46 +23,30 @@ class _TransactionListState extends State<TransactionList> {
           itemCount: widget.transaction.length,
           itemBuilder: (context, index) {
             return Card(
-              child: Row(children: [
-                Container(
-                  width: 110,
-                  margin: EdgeInsets.all(10),
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  decoration: BoxDecoration(
-                      border:
-                          Border.all(color: Theme.of(context).primaryColor, width: 1.5)),
-                  child: Text(
-                    "৳ ${widget.transaction[index].amount.toStringAsFixed(1)}",
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17),
-                    textAlign: TextAlign.start,
+              elevation: 5,
+               shadowColor:  Color(0xffff80ff),
+               
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+               
+              child: Padding(
+                padding: EdgeInsets.all(5),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 30,
+                    child: Padding(
+                      padding: EdgeInsets.all(5),
+                      child: FittedBox(child: Text("৳ ${widget.transaction[index].amount.toString()}"))),
                   ),
+                  title: Text(widget.transaction[index].title),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                    Text(DateFormat.yMMMMd().format(widget.transaction[index].date)),
+                    Text(DateFormat.jms().format(widget.transaction[index].date))
+                  ],),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.transaction[index].title,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      DateFormat.jms()
-                          .format(widget.transaction[index].date),
-                      style: TextStyle(color: Colors.black54),
-                    ),
-                    Text(
-                      DateFormat.yMMMEd()
-                          .format(widget.transaction[index].date),
-                      style: TextStyle(color: Colors.black54),
-                    )
-                  ],
-                )
-              ]),
-            );
-          }):Column(
+              ),
+            );}):Column(
              crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text("No transaction added yet!!!",style: Theme.of(context).textTheme.titleMedium,),

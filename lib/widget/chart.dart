@@ -31,7 +31,7 @@ class Chart extends StatelessWidget {
         return {"day": DateFormat.E().format(weekDay),
          "amount": totalSum};
       },
-    );
+    ).reversed.toList();
   }
 
   
@@ -45,7 +45,9 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     print(groupedTransactionValues);
     return Card(
-      elevation: 15,
+      elevation: 10,
+      shadowColor:  Color(0xffff80ff),
+        
       margin: EdgeInsets.all(20),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
