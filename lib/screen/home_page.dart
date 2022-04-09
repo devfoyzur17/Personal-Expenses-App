@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_field, unused_element
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_field, unused_element, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -17,26 +17,24 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _nameController = TextEditingController();
   final _amountController = TextEditingController();
+  int id = 0;
 
-  final List<Transaction> _transaction = [
-    // Transaction(id: "1", title: "Books", amount: 599, date: DateTime.now()),
-    // Transaction(id: "1", title: "Laptop", amount: 50000, date: DateTime.now()),
-    // Transaction(id: "1", title: "Phone", amount: 14999, date: DateTime.now()),
-  ];
+  final List<Transaction> _transaction = [];
 
-  List<Transaction> get  _recentTransaction{
+  List<Transaction> get _recentTransaction {
     return _transaction.where((tx) {
       return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
-    }
-    ).toList();
+    }).toList();
   }
 
-  void _addNewTransaction(String name, double amount) {
+  void _addNewTransaction(
+      String name, double amount, DateTime choisenDate, String choisenTime) {
     final newTransaction = Transaction(
-        id: DateFormat.NUM_MONTH_DAY.toString(),
+        id: DateTime.now().toString(),
         title: name,
         amount: amount,
-        date: DateTime.now());
+        date: choisenDate,
+        time: choisenTime);
 
     setState(() {
       _transaction.add(newTransaction);
@@ -48,19 +46,23 @@ class _HomePageState extends State<HomePage> {
         context: context,
         builder: (_) {
           return GestureDetector(
-            onTap: (){},
+            onTap: () {},
             child: NewTransaction(_addNewTransaction),
-           // behavior: HitTestBehavior.opaque,
-            );
-            
+            // behavior: HitTestBehavior.opaque,
+          );
         });
+  }
+
+  void _removeTransaction(String id) {
+    setState(() {
+      _transaction.removeWhere((element) => element.id == id);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 2, 
+    final appbar = AppBar(
+        elevation: 2,
         title: Text("Personal Expenses List!"),
         actions: [
           IconButton(
@@ -69,15 +71,25 @@ class _HomePageState extends State<HomePage> {
               },
               icon: Icon(Icons.add))
         ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          
-          Chart(_recentTransaction),
-          //   NewTransaction(_addNewTransaction),
-          TransactionList(_transaction)
-        ],
+      );
+    return Scaffold(
+      appBar: appbar,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              alignment: Alignment.center,
+              height: (MediaQuery.of(context).size.height-appbar.preferredSize.height-MediaQuery.of(context).padding.top)*0.3,
+              child: Chart(_recentTransaction)),
+              
+            //   NewTransaction(_addNewTransaction),
+            Container(
+              height: (MediaQuery.of(context).size.height-appbar.preferredSize.height-MediaQuery.of(context).padding.top)*0.7,
+              child: TransactionList(_transaction, _removeTransaction))
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 2,

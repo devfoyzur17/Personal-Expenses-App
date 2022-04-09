@@ -10,39 +10,47 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 20,
-          child: FittedBox(child: Text("৳${spendingAmount.toStringAsFixed(0)}"))),
-        SizedBox(
-          height: 4,
-        ),
-        Container(
-          height: 40,
-          width: 10,
-          child: Stack(children: [
-            Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1),
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(10)),
-            ),
-            FractionallySizedBox(
-              heightFactor: spendingPctOfAmount,
-              child: Container(
+    return LayoutBuilder(builder: (context, constraints) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+        height: constraints.maxHeight*0.15,
+
+              child: FittedBox(
+                  child: Text("৳${spendingAmount.toStringAsFixed(0)}"))),
+          SizedBox(
+            height: constraints.maxHeight*0.05,
+          ),
+          Container(
+            height: constraints.maxHeight*0.6,
+            width: 10,
+            child: Stack(alignment: Alignment.bottomCenter, children: [
+              Container(
                 decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(10)),
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
               ),
-            )
-          ]),
-        ),
-        SizedBox(
-          height: 4,
-        ),
-        Text(label)
-      ],
-    );
+              FractionallySizedBox(
+                heightFactor: spendingPctOfAmount,
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                ),
+              )
+            ]),
+          ),
+          SizedBox(
+      height: constraints.maxHeight*0.05,
+
+          ),
+          Container(
+          height: constraints.maxHeight*0.15,
+
+            child: FittedBox(child: Text(label)))
+        ],
+      );
+    });
   }
 }
