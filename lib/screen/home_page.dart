@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_field, unused_element, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:personal_expenses_app/widget/chart.dart';
 import 'package:personal_expenses_app/widget/new_transaction.dart';
 import 'package:personal_expenses_app/widget/transaction_list.dart';
@@ -17,6 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _nameController = TextEditingController();
   final _amountController = TextEditingController();
+  bool _showChart = false;
   int id = 0;
 
   final List<Transaction> _transaction = [];
@@ -61,17 +61,27 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+        final _mediaQuery = MediaQuery.of(context);
+ 
+    final _isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final appbar = AppBar(
-        elevation: 2,
-        title: Text("Personal Expenses List!"),
-        actions: [
-          IconButton(
-              onPressed: () {
-                _startAddNewTransaction(context);
-              },
-              icon: Icon(Icons.add))
-        ],
-      );
+      elevation: 2,
+      title: Text("Personal Expenses List!"),
+      actions: [
+        IconButton(
+            onPressed: () {
+              _startAddNewTransaction(context);
+            },
+            icon: Icon(Icons.add))
+      ],
+    );
+    final txListWidget = Container(
+        height: (_mediaQuery.size.height -
+                appbar.preferredSize.height -
+                _mediaQuery.padding.top) *
+            0.7,
+        child: TransactionList(_transaction, _removeTransaction));
     return Scaffold(
       appBar: appbar,
       body: SingleChildScrollView(
@@ -79,15 +89,51 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              alignment: Alignment.center,
-              height: (MediaQuery.of(context).size.height-appbar.preferredSize.height-MediaQuery.of(context).padding.top)*0.3,
-              child: Chart(_recentTransaction)),
-              
+            if (_isLandscape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Show chart",
+                    style: TextStyle(
+                        color: Colors.purple, fontWeight: FontWeight.bold),
+                  ),
+                  Switch(
+                      value: _showChart,
+                      onChanged: (value) {
+                        setState(() {
+                          _showChart = value;
+                        });
+                      })
+                ],
+              ),
+
+            if (!_isLandscape)
+              Container(
+                  alignment: Alignment.center,
+                  height: (_mediaQuery.size.height -
+                          appbar.preferredSize.height -
+                          _mediaQuery.padding.top) *
+                      0.3,
+                  child: Chart(_recentTransaction)),
+            if (!_isLandscape) txListWidget,
+
+            if (_isLandscape)
+              _showChart
+                  ? Container(
+                      alignment: Alignment.center,
+                      height: (_mediaQuery.size.height -
+                              appbar.preferredSize.height -
+                              _mediaQuery.padding.top) *
+                          0.7,
+                      child: Chart(_recentTransaction))
+                  :  Text(""),
+
+                  if(_isLandscape)
+                  txListWidget
+
+
             //   NewTransaction(_addNewTransaction),
-            Container(
-              height: (MediaQuery.of(context).size.height-appbar.preferredSize.height-MediaQuery.of(context).padding.top)*0.7,
-              child: TransactionList(_transaction, _removeTransaction))
           ],
         ),
       ),

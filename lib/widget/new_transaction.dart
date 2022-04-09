@@ -69,144 +69,151 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      
-      elevation: 2,
-      child: Container(
-        margin: EdgeInsets.all(10),
-        child: Column(children: [
-// this is amount textfield
-
-          TextField(
-            controller: _nameController,
-            keyboardType: TextInputType.name,
-            onSubmitted: (_) => submittedData(),
-            decoration: InputDecoration(
-                labelText: "Name",
-                hintText: "enter your cost name.",
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(
-                      color: Colors.purple,
-                    )),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(color: Color(0xffff00ff))),
-                labelStyle: TextStyle(color: Colors.purple),
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-                contentPadding: EdgeInsets.symmetric(horizontal: 15)),
+    return SingleChildScrollView(
+      child: Card(
+        
+        elevation: 2,
+        child: Container(
+          padding: EdgeInsets.only(
+            left: 10,
+            right: 10,
+            top: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom+10
           ),
-          SizedBox(
-            height: 20,
-          ),
-
-// This is amount text field
-
-          TextField(
-             
-            controller: _amountController,
-            keyboardType: TextInputType.number,
-            onSubmitted: (_) => submittedData(),
-            decoration: InputDecoration(
-                labelText: "Amount",
-                hintText: "enter the cost name.",
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(
-                      color: Colors.purple,
-                    )),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(color: Color(0xffff00ff))),
-                labelStyle: TextStyle(color: Colors.purple),
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-                contentPadding: EdgeInsets.symmetric(horizontal: 15)),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-
-          Container(
-            height: 40,
-            child: Row(
-              children: [
-                Flexible(
-                    fit: FlexFit.tight,
-                    child: Text(
-                      _selectedDate == null
-                          ? "No date choisen!!"
-                          : DateFormat.yMMMd().format(_selectedDate!),
-                      style: TextStyle(
-                          color: _selectedDate == null
-                              ? Colors.red
-                              : Colors.purple,
-                          fontWeight: FontWeight.bold),
-                    )),
-                TextButton(
-                    onPressed: _presentDatePicker,
-                    child: Text(
-                      "Choise date",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: _selectedDate == null
-                              ? Colors.red
-                              : Colors.purple),
-                    ))
-              ],
+          child: Column(children: [
+    // this is amount textfield
+    
+            TextField(
+              controller: _nameController,
+              keyboardType: TextInputType.name,
+              onSubmitted: (_) => submittedData(),
+              decoration: InputDecoration(
+                  labelText: "Name",
+                  hintText: "enter your cost name.",
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(
+                        color: Colors.purple,
+                      )),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(color: Color(0xffff00ff))),
+                  labelStyle: TextStyle(color: Colors.purple),
+                  border:
+                      OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 15)),
             ),
-          ),
-
-          Container(
-            height: 40,
-            child: Row(
-              children: [
-                Flexible(
-                    fit: FlexFit.tight,
-                    child: Text(
-                      _selectedTime == null
-                          ? "No time choisen!!"
-                          : _selectedTime.toString(),
-                      style: TextStyle(
-                          color: _selectedTime == null
-                              ? Colors.red
-                              : Colors.purple,
-                          fontWeight: FontWeight.bold),
-                    )),
-                TextButton(
-                    onPressed: () {
-                      _PresentTimePicker();
-                    },
-                    child: Text(
-                      "Choise time",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: _selectedTime == null
-                              ? Colors.red
-                              : Colors.purple),
-                    ))
-              ],
+            SizedBox(
+              height: 20,
             ),
-          ),
-
-// this is add transaction button
-
-          OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                  primary: Colors.purple,
-                  side: BorderSide(
-                    color: Colors.purple,
-                    width: 2,
-                  )),
-              onPressed: () {
-                submittedData();
-              },
-              child: Text(
-                "Add Transaction",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ))
-        ]),
+    
+    // This is amount text field
+    
+            TextField(
+               
+              controller: _amountController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => submittedData(),
+              decoration: InputDecoration(
+                  labelText: "Amount",
+                  hintText: "enter the cost name.",
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(
+                        color: Colors.purple,
+                      )),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(color: Color(0xffff00ff))),
+                  labelStyle: TextStyle(color: Colors.purple),
+                  border:
+                      OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 15)),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+    
+            Container(
+              height: 40,
+              child: Row(
+                children: [
+                  Flexible(
+                      fit: FlexFit.tight,
+                      child: Text(
+                        _selectedDate == null
+                            ? "No date choisen!!"
+                            : DateFormat.yMMMd().format(_selectedDate!),
+                        style: TextStyle(
+                            color: _selectedDate == null
+                                ? Colors.red
+                                : Colors.purple,
+                            fontWeight: FontWeight.bold),
+                      )),
+                  TextButton(
+                      onPressed: _presentDatePicker,
+                      child: Text(
+                        "Choise date",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: _selectedDate == null
+                                ? Colors.red
+                                : Colors.purple),
+                      ))
+                ],
+              ),
+            ),
+    
+            Container(
+              height: 40,
+              child: Row(
+                children: [
+                  Flexible(
+                      fit: FlexFit.tight,
+                      child: Text(
+                        _selectedTime == null
+                            ? "No time choisen!!"
+                            : _selectedTime.toString(),
+                        style: TextStyle(
+                            color: _selectedTime == null
+                                ? Colors.red
+                                : Colors.purple,
+                            fontWeight: FontWeight.bold),
+                      )),
+                  TextButton(
+                      onPressed: () {
+                        _PresentTimePicker();
+                      },
+                      child: Text(
+                        "Choise time",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: _selectedTime == null
+                                ? Colors.red
+                                : Colors.purple),
+                      ))
+                ],
+              ),
+            ),
+    
+    // this is add transaction button
+    
+            OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                    primary: Colors.purple,
+                    side: BorderSide(
+                      color: Colors.purple,
+                      width: 2,
+                    )),
+                onPressed: () {
+                  submittedData();
+                },
+                child: Text(
+                  "Add Transaction",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ))
+          ]),
+        ),
       ),
     );
   }
