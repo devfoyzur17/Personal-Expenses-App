@@ -59,10 +59,54 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  List<Widget> _buildLandscapeContenr(mediaQuery, appBar, txtListWidget) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Show chart",
+            style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold),
+          ),
+          Switch(
+              value: _showChart,
+              onChanged: (value) {
+                setState(() {
+                  _showChart = value;
+                });
+              })
+        ],
+      ),
+      _showChart
+          ? Container(
+              alignment: Alignment.center,
+              height: (mediaQuery.size.height -
+                      appBar.preferredSize.height -
+                      mediaQuery.padding.top) *
+                  0.7,
+              child: Chart(_recentTransaction))
+          : Text(""),
+      txtListWidget
+    ];
+  }
+
+  List<Widget> _buildPortraintContant(MediaQueryData mediaQuery, AppBar appbar, Container txListWidget){
+
+    return [Container(
+                  alignment: Alignment.center,
+                  height: (mediaQuery.size.height -
+                          appbar.preferredSize.height -
+                          mediaQuery.padding.top) *
+                      0.3,
+                  child: Chart(_recentTransaction)),
+                  txListWidget];
+
+  }
+
   @override
   Widget build(BuildContext context) {
-        final _mediaQuery = MediaQuery.of(context);
- 
+    final _mediaQuery = MediaQuery.of(context);
+
     final _isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
     final appbar = AppBar(
@@ -90,48 +134,10 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (_isLandscape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Show chart",
-                    style: TextStyle(
-                        color: Colors.purple, fontWeight: FontWeight.bold),
-                  ),
-                  Switch(
-                      value: _showChart,
-                      onChanged: (value) {
-                        setState(() {
-                          _showChart = value;
-                        });
-                      })
-                ],
-              ),
+              ..._buildLandscapeContenr(_mediaQuery, appbar, txListWidget),
 
-            if (!_isLandscape)
-              Container(
-                  alignment: Alignment.center,
-                  height: (_mediaQuery.size.height -
-                          appbar.preferredSize.height -
-                          _mediaQuery.padding.top) *
-                      0.3,
-                  child: Chart(_recentTransaction)),
-            if (!_isLandscape) txListWidget,
-
-            if (_isLandscape)
-              _showChart
-                  ? Container(
-                      alignment: Alignment.center,
-                      height: (_mediaQuery.size.height -
-                              appbar.preferredSize.height -
-                              _mediaQuery.padding.top) *
-                          0.7,
-                      child: Chart(_recentTransaction))
-                  :  Text(""),
-
-                  if(_isLandscape)
-                  txListWidget
-
+            if (!_isLandscape) ..._buildPortraintContant(_mediaQuery, appbar, txListWidget),
+            
 
             //   NewTransaction(_addNewTransaction),
           ],
