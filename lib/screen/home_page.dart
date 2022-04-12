@@ -90,17 +90,18 @@ class _HomePageState extends State<HomePage> {
     ];
   }
 
-  List<Widget> _buildPortraintContant(MediaQueryData mediaQuery, AppBar appbar, Container txListWidget){
-
-    return [Container(
-                  alignment: Alignment.center,
-                  height: (mediaQuery.size.height -
-                          appbar.preferredSize.height -
-                          mediaQuery.padding.top) *
-                      0.3,
-                  child: Chart(_recentTransaction)),
-                  txListWidget];
-
+  List<Widget> _buildPortraintContant(
+      MediaQueryData mediaQuery, AppBar appbar, Container txListWidget) {
+    return [
+      Container(
+          alignment: Alignment.center,
+          height: (mediaQuery.size.height -
+                  appbar.preferredSize.height -
+                  mediaQuery.padding.top) *
+              0.3,
+          child: Chart(_recentTransaction)),
+      txListWidget
+    ];
   }
 
   @override
@@ -136,8 +137,8 @@ class _HomePageState extends State<HomePage> {
             if (_isLandscape)
               ..._buildLandscapeContenr(_mediaQuery, appbar, txListWidget),
 
-            if (!_isLandscape) ..._buildPortraintContant(_mediaQuery, appbar, txListWidget),
-            
+            if (!_isLandscape)
+              ..._buildPortraintContant(_mediaQuery, appbar, txListWidget),
 
             //   NewTransaction(_addNewTransaction),
           ],

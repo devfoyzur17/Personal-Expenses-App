@@ -20,12 +20,13 @@ class _TransactionListState extends State<TransactionList> {
   @override
   Widget build(BuildContext context) {
     return widget.transaction.isNotEmpty
-        ? ListView.builder(
-           
-            itemCount: widget.transaction.length,
-            itemBuilder: (context, index) {
-              return TransactionItem(transaction: widget.transaction[index],removeTransaction: widget.removeTransaction);
-            })
+        ? ListView(
+            children: widget.transaction
+                .map((e) => TransactionItem(
+                  Key : ValueKey(e.id),
+                    transaction: e,
+                    removeTransaction: widget.removeTransaction))
+                .toList())
         : LayoutBuilder(builder: (context, constraints) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
